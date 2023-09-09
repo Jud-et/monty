@@ -19,6 +19,8 @@ void err_dir(char *opcode, unsigned int line_number)
 
 /**
  * err_pint - a function which will print pint error
+ * @opcode: opcode
+ * @line_number: number of the line
  */
 void err_pint(char *opcode, unsigned int line_number)
 {

@@ -11,33 +11,39 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
-    {
-        fprintf(stderr, "USAGE: monty file\n");
-        return (EXIT_FAILURE);
-    }
+	FILE *fp;
+	char line[MAX_LINE_LENGTH];
+	stack_t *stack = NULL;
+	char *filename;
+	unsigned int line_number = 0;
+	size_t length = 0;
 
-    FILE *fp = fopen(argv[1], "r");
-    if (fp == NULL)
-    {
-        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-        return (EXIT_FAILURE);
-    }
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		return (EXIT_FAILURE);
+	}
 
-    char line[MAX_LINE_LENGTH];
-    stack_t *stack = NULL;
-    unsigned int line_number = 0;
+	filename = argv[1];
+	fp = fopen(filename, "r");
 
-    while (fgets(line, sizeof(line), fp))
-    {
-        line_number++;
-        if (line[strlen(line) - 1] == '\n')
-            line[strlen(line) - 1] = '\0';
-        exe(line, &stack, line_number);
-    }
+	if (fp == NULL)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		return (EXIT_FAILURE);
+	}
+	while (fgets(line, sizeof(line), fp) != NULL)
+	{
+		line_number++;
+		length = strlen(line);
 
-    fclose(fp);
-    free_stack(stack);
+		if (length > 0 && line[length - 1] == '\n')
+			line[length - 1] = '\0';
 
-    return (EXIT_SUCCESS);
+		exe(line, &stack, line_number);
+	}
+	fclose(fp);
+	free_stack(stack);
+
+	return (EXIT_SUCCESS);
 }

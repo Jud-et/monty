@@ -1,39 +1,40 @@
 #include "monty.h"
-
 /**
- * pop - function to pop the top element from the stack
- * @stack: pointer to the stack
- * @line_number: the line number
+ * pop - this is the function pop
+ * @stack: this is the stack
+ * @line_number: the number of the line
  */
 void pop(stack_t **stack, unsigned int line_number)
 {
+	stack_t *tmp;
+
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
-
-	stack_t *tmp = *stack;
+	tmp = *stack;
 	*stack = (*stack)->next;
 	free(tmp);
 }
-
 /**
- * swap - function to swap the top two elements of the stack
- * @stack: pointer to the stack
- * @line_number: the line number
+ * swap - this is the function that swaps between two stacks
+ * @stack: the stack
+ * @line_number: the number of the line
  */
+
 void swap(stack_t **stack, unsigned int line_number)
 {
+	stack_t *tmp;
+
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
-
-	stack_t *tmp = (*stack)->next;
+	tmp = (*stack)->next;
 	(*stack)->next = tmp->next;
 	(*stack)->prev = tmp;
 
@@ -43,11 +44,10 @@ void swap(stack_t **stack, unsigned int line_number)
 	tmp->next = *stack;
 	*stack = tmp;
 }
-
 /**
- * add - function to add the top two elements of the stack
- * @stack: pointer to the stack
- * @line_number: the line number
+ * add - function that adds the stacks
+ * @stack: the stacks to be added
+ * @line_number: the number of the lin
  */
 void add(stack_t **stack, unsigned int line_number)
 {
@@ -57,33 +57,31 @@ void add(stack_t **stack, unsigned int line_number)
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
-
 	(*stack)->next->n += (*stack)->n;
 	pop(stack, line_number);
 }
-
 /**
- * nop - function that does nothing (no operation)
- * @stack: pointer to the stack
- * @line_number: the line number
+ * nop - this is the function nope
+ * @stack: the stack to be used
+ * @line_number: the number of the line
  */
-void nop(__attribute__((unused)) stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void nop(__attribute__((unused)) stack_t **stack,
+	__attribute__((unused)) unsigned int line_number)
 {
 }
-
 /**
- * _isdigit - function to check if a string represents a valid integer
- * @value: the string to check
- * Return: 1 if it's a valid integer, 0 otherwise
+ * _isdigit - this is a function to show whether a string is a digit
+ * Return: void
  */
 int _isdigit(char *value)
 {
+	int i;
+
 	if (value == NULL)
 		return (0);
-
-	for (int i = 0; value[i]; i++)
+	for (i = 0 ; value[i] != '\0'; i++)
 	{
-		if (i == 0 && value[i] == '-')
+		if (value[i] == '-' && i == 0)
 			continue;
 		if (!isdigit(value[i]))
 			return (0);
@@ -91,4 +89,3 @@ int _isdigit(char *value)
 
 	return (1);
 }
-

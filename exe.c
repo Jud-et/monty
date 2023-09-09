@@ -4,6 +4,7 @@
  * exe - function that executes a line
  * @line: the line that will be executed
  * @stack: the stack
+ * @line_number: Line number
  */
 
 void exe(char *line, stack_t **stack, unsigned int line_number)
